@@ -1,0 +1,31 @@
+* {
+  margin: 10px;
+  font-family: "Oswald", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-size: xx-large;
+  width: 100;
+}
+
+h1 {
+  font-family: "Lato", sans-serif;
+  font-weight: normal;
+  font-size: large;
+  justify-self: flex-start;
+}
+
+p {
+  justify-self: center;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  background-color: #ffa77c;
+  font-size: large;
+}

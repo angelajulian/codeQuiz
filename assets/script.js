@@ -3,6 +3,7 @@ var questionTextEl = document.querySelector("#question-text");
 var answerListEl = document.querySelector("#answer-list");
 var answerButton = document.querySelector(".answer-button");
 var answersCorrect = 0;
+var questionNumber = 0;
 
 // store a list of questions
 //questions include:
@@ -14,12 +15,13 @@ var answersCorrect = 0;
 var questions = [
   {
     text: "How are Java and Javascript related?",
-    answers: {
-      "Java is named after Javascript": false,
-      "They are the same thing": false,
-      "Javascript was named after Java": true,
-      "Javascript is build off of Java": false,
-    },
+    answers: [
+      "Java is named after Javascript",
+      "They are the same thing",
+      "Javascript was named after Java",
+      "Javascript is build off of Java",
+    ],
+    key: [false, false, true, false],
   },
   {
     text: "What is true about console.log?",
@@ -49,12 +51,13 @@ var questions = [
   },
   {
     text: "Strings must be enclosed in ____",
-    answers: {
-      "Double or single quotes": true,
-      "Square Brackets": false,
-      "Double quotes, only": false,
-      "Single quotes, only": false,
-    },
+    answers: [
+      "Double or single quotes",
+      "Square Brackets",
+      "Double quotes, only",
+      "Single quotes, only",
+    ],
+    key: [true, false, false, false],
   },
   {
     text: "4.5 is an example of",
@@ -93,12 +96,41 @@ var questions = [
   },
 ];
 
-var renderQuestionEl = function (questionObj) {
-  var listItemEl = document.createElement("li");
-  listItemEl.className = "answer-button";
+var renderQuestionEl = function (event, questionObj) {
+  event.preventDefault();
+
+  questionTitleEl.textContent = "question " + questionNumber;
+  questionTextEl.textContent = questionObj.text;
+
+  while (answerListEl.lastChild) {
+    answerListEl.removeChild(answerListEl.lastChild);
+
+    if (!answerListEl.lastChild) {
+      break;
+    }
+  }
+
+  var answers = questionObj.answers;
+  var key = questionObj.key;
+
+  for (i = 0; i < questionObj.answers.length; i++) {
+    createButton(answers[i], key[i]);
+  }
 };
 
-// when question is loaded, set timer for 30 seconds
+var createButton = function (item, key) {
+  var answerListItemEl = document.createElement("li");
+  answerListItemEl.setAttribute("answerKey", key);
+  var answerButtonEl = document.createElement("button");
+  answerButtonEl.className = "answer-button";
+  answerButtonEl.textContent = item;
+
+  answerListItemEl.appendChild(answerButtonEl);
+  answerListEl.appendChild(answerListItemEl);
+};
+
+answerButton.addEventListener("click", renderQuestionEl(questions[0]));
+// when quiz is loaded, set timer for 300 seconds
 // run timer
 // load question title, question text, and answer list
 
