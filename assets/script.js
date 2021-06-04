@@ -4,6 +4,7 @@ var answerListEl = document.querySelector("#answer-list");
 var answerButton = document.querySelector(".answer-button");
 var answersCorrect = 0;
 var questionNumber = 0;
+var j = 0;
 
 // store a list of questions
 //questions include:
@@ -96,9 +97,7 @@ var questions = [
   },
 ];
 
-var renderQuestionEl = function (event, questionObj) {
-  event.preventDefault();
-
+var renderQuestionEl = function (questionObj) {
   questionTitleEl.textContent = "question " + questionNumber;
   questionTextEl.textContent = questionObj.text;
 
@@ -116,6 +115,8 @@ var renderQuestionEl = function (event, questionObj) {
   for (i = 0; i < questionObj.answers.length; i++) {
     createButton(answers[i], key[i]);
   }
+
+  j++;
 };
 
 var createButton = function (item, key) {
@@ -124,12 +125,13 @@ var createButton = function (item, key) {
   var answerButtonEl = document.createElement("button");
   answerButtonEl.className = "answer-button";
   answerButtonEl.textContent = item;
+  answerButtonEl.setAttribute("data", "correct:" + key);
 
   answerListItemEl.appendChild(answerButtonEl);
   answerListEl.appendChild(answerListItemEl);
 };
 
-answerButton.addEventListener("click", renderQuestionEl(questions[0]));
+answerButton.addEventListener("click", () => renderQuestionEl(questions[0]));
 // when quiz is loaded, set timer for 300 seconds
 // run timer
 // load question title, question text, and answer list
