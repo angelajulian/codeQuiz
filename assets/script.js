@@ -78,10 +78,10 @@ var startTime = 300000;
 var answerList = document.getElementById("answer-list");
 var questionText = document.getElementById("question-text");
 var j = 0;
-var startButton = document.getElementById("start-button");
 
-var startQuiz = function (item) {
-  console.log(item);
+var startQuiz = function () {
+  console.log(this);
+
   if (j >= questions.length) {
     console.log("end");
   } else {
@@ -149,8 +149,11 @@ var loadQuestions = function (i) {
 //                 add score to leaderboard
 //                 show leaderboard from localStorage
 
-document.querySelectorAll(".bttn").forEach((item) =>
-  item.addEventListener("click", (event) => {
-    startQuiz(item);
-  })
-);
+// var startButton = document.querySelector("#start-button");
+// startButton.addEventListener("click", function () {
+//   startQuiz();
+//   loadQuestions(j);
+// });
+answerList.addEventListener("click", function () {
+  startQuiz(this);
+});
