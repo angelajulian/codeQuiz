@@ -21,7 +21,7 @@ var questions = [
   },
   {
     text: "Javascript is an object oriented programming language",
-    answers: [True, False],
+    answers: ["True ", "False "],
     key: [0],
   },
   {
@@ -74,3 +74,83 @@ var questions = [
     key: [3],
   },
 ];
+var startTime = 300000;
+var answerList = document.getElementById("answer-list");
+var questionText = document.getElementById("question-text");
+var j = 0;
+var startButton = document.getElementById("start-button");
+
+var startQuiz = function (item) {
+  console.log(item);
+  if (j >= questions.length) {
+    console.log("end");
+  } else {
+    if (j === 0) {
+      timer();
+    }
+    loadQuestions(j);
+    j++;
+  }
+};
+
+var timer = function () {
+  var time = setInterval(function () {
+    // 5 minute timer START
+    var minutes = Math.floor(startTime / 60000);
+    // console.log(minutes);
+    var seconds = Math.floor((startTime % 60000) / 1000).toLocaleString(
+      "en-US",
+      {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      }
+    );
+    // console.log(seconds);
+    document.querySelector("#timer").textContent = minutes + ":" + seconds;
+
+    startTime = startTime - 1000;
+
+    // console.log(startTime);
+    if (startTime < 0) {
+      clearInterval(time);
+    }
+  }, 1000);
+};
+
+var loadQuestions = function (i) {
+  var question = questions[i];
+  var title = question.text;
+  questionText.innerHTML = title;
+  answerList.innerHTML = "";
+  for (k = 0; k < question.answers.length; k++) {
+    var ansButton = document.createElement("button");
+    ansButton.id = k;
+    ansButton.textContent = question.answers[k];
+    answerList.append(ansButton);
+  }
+};
+
+//     on question answer:
+//         if question correct:
+//             flash green "Correct!" Message
+//             3 second animation in and out
+//         else
+//             flash red "Incorrect" message.
+//             highlight correct answer in green.
+//             3 second animation in and out
+//             minus 10 seconds from test timer
+
+//         load next question
+
+//     all questions answered:
+//         calculate score- number correct answers, then time to complete
+//         show initial screen
+//             entered initials:
+//                 add score to leaderboard
+//                 show leaderboard from localStorage
+
+document.querySelectorAll(".bttn").forEach((item) =>
+  item.addEventListener("click", (event) => {
+    startQuiz(item);
+  })
+);
